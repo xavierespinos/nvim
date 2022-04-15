@@ -49,9 +49,6 @@ Plug 'nvim-telescope/telescope-file-browser.nvim'
 "Native LSP
 Plug 'neovim/nvim-lspconfig'
 
-"Buffer navigation
-Plug 'nvim-lualine/lualine.nvim'
-
 
 "Telescope Requirements
 Plug 'nvim-lua/popup.nvim'
@@ -76,7 +73,11 @@ Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
 
 "Bottom line""
-Plug 'nvim-lualine/lualine.nvim'
+" Plug 'nvim-lualine/lualine.nvim'
+Plug 'tamton-aquib/staline.nvim'
+
+"Comments"
+Plug 'numToStr/Comment.nvim'
 
 call plug#end()
 
@@ -118,11 +119,16 @@ nnoremap <leader>w :w<CR>
 "Formatting"
 
 " should be unique
-lua require("config") 
+lua require("config")
 lua require("lsp")
 lua require("treesitter")
 lua require("lualine")
 
+
+"Configuration comments plugin"
+lua << EOF
+require('Comment').setup()
+EOF
 
 set completeopt=menu,menuone,noselect
 
@@ -172,27 +178,27 @@ lua <<EOF
   })
 
   -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline('/', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = {
-      { name = 'buffer' }
-    }
-  })
+ cmp.setup.cmdline('/', {
+   mapping = cmp.mapping.preset.cmdline(),
+   sources = {
+     { name = 'buffer' }
+  }
+ })
 
   -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-      { name = 'path' }
-    }, {
-      { name = 'cmdline' }
-    })
-  })
+ cmp.setup.cmdline(':', {
+   mapping = cmp.mapping.preset.cmdline(),
+   sources = cmp.config.sources({
+     { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+   })
+ })
 
   -- Setup lspconfig.
   local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
   -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
+  require('lspconfig')['gopls'].setup {
     capabilities = capabilities
   }
 EOF
