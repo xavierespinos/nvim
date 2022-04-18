@@ -115,6 +115,7 @@ nnoremap <leader><CR> :source ~/.config/nvim/init.vim<CR>
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>nf :enew<CR>
 nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
 
 "Formatting"
 
